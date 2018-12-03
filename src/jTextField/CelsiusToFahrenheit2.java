@@ -4,27 +4,25 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
-public class CelsiusToFahrenheit extends JFrame implements ActionListener{
+// Robimy bez action listenera CheckBox
+public class CelsiusToFahrenheit2 extends JFrame implements ActionListener{
 	
 	private JLabel lCelsius, lFahrenheit;
 	private JTextField tCelsius, tFahrenheit;
 	private JButton bKonwertuj;
 	private JCheckBox chBigLetters;
-	private ButtonGroup bgRozmiar;
-	private JRadioButton rbSmall, rbMedium, rbBig;
+
 	
 	private double tempCelsius, tempFahrenheit;
 	
 		
-	public CelsiusToFahrenheit() {
+	public CelsiusToFahrenheit2() {
 		
 		
 		//Ramka
@@ -63,27 +61,9 @@ public class CelsiusToFahrenheit extends JFrame implements ActionListener{
 		chBigLetters = new JCheckBox("Wielkie litery");
 		chBigLetters.setBounds(120,80,150,20);
 		add(chBigLetters);
-		chBigLetters.addActionListener(this);
+		//chBigLetters.addActionListener(this);
 		
-		//robimy radio button
-		bgRozmiar = new ButtonGroup();
-		rbSmall = new JRadioButton("Small", true); // w jednym mo¿e byæ true a reszta false, ¿eby by³ jeden wybór
-		rbSmall.setBounds(50, 110, 100, 20);
-		bgRozmiar.add(rbSmall);
-		add(rbSmall);
-		rbSmall.addActionListener(this);
 		
-		rbMedium = new JRadioButton("Medium", false);
-		rbMedium.setBounds(150, 110, 100, 20);
-		bgRozmiar.add(rbMedium);
-		add(rbMedium);
-		rbMedium.addActionListener(this);
-		
-		rbBig = new JRadioButton("Big", false);
-		rbBig.setBounds(250, 110, 100, 20);
-		bgRozmiar.add(rbBig);
-		add(rbBig);
-		rbBig.addActionListener(this);
 		
 		
 	}
@@ -91,7 +71,7 @@ public class CelsiusToFahrenheit extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		
 		
-		CelsiusToFahrenheit aplikacja = new CelsiusToFahrenheit();
+		CelsiusToFahrenheit2 aplikacja = new CelsiusToFahrenheit2();
 		aplikacja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		aplikacja.setVisible(true);
 
@@ -103,13 +83,7 @@ public class CelsiusToFahrenheit extends JFrame implements ActionListener{
 		Object source = e.getSource();
 		
 		if(source == bKonwertuj || source == tCelsius) {
-			
-		tempCelsius = Double.parseDouble(tCelsius.getText());
-		tempFahrenheit = 32.0 + (9.0/5.0) * tempCelsius;
-		tFahrenheit.setText(String.valueOf(tempFahrenheit));
-		
-		} else if(source == chBigLetters) {
-			
+			//obs³uga checkBoxa jest wrzucona tutaj
 			if(chBigLetters.isSelected()) {
 				
 				tFahrenheit.setFont(new Font("SansSerif", Font.BOLD, 18 ));
@@ -119,16 +93,15 @@ public class CelsiusToFahrenheit extends JFrame implements ActionListener{
 				tFahrenheit.setFont(new Font("SansSerif", Font.PLAIN, 12 ));
 				
 			}
-		} else if(source == rbSmall ) {
 			
-			tFahrenheit.setFont(new Font("SansSerif", Font.PLAIN, 8 ));
-		} else if(source == rbMedium ) {
+		tempCelsius = Double.parseDouble(tCelsius.getText());
+		tempFahrenheit = 32.0 + (9.0/5.0) * tempCelsius;
+		tFahrenheit.setText(String.valueOf(tempFahrenheit));
+		
+		} 
 			
-			tFahrenheit.setFont(new Font("SansSerif", Font.PLAIN, 14 ));
-		} else if(source == rbBig ) {
 			
-			tFahrenheit.setFont(new Font("SansSerif", Font.BOLD, 20 ));
-		}
+		
 		
 		
 	}
