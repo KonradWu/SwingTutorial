@@ -1,4 +1,4 @@
-package jOptionPane;
+package jPopupMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,23 +17,26 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-public class JOptionPaneTest extends JFrame implements ActionListener {
+public class Notatnik2 extends JFrame implements ActionListener {
 	
 	JLabel label1;
 	JButton bSzukaj; 
+	JPopupMenu popup;
 	JMenuBar menuBar; 
-	JMenu menuPlik, menuNarzedzia, menuOpcje, menuPomoc;
-	JMenuItem mOtwórz, mZapisz, mWyjœcie, mNarz1, mNarz2, mOpcja1, mOProgramie;
+	JMenu menuPlik, menuNarzedzia, mNarzedziaJezyk, menuOpcje, menuPomoc;
+	JMenuItem mOtwórz, mZapisz, mWyjœcie, mNarz1, mNarz2, mNarzJez1, mpKopiuj, mpWklej, mpDo³¹cz, mOpcja1, mOProgramie;
 	JTextField tSzukany;
-	JCheckBoxMenuItem chOpcja2;
+	JCheckBoxMenuItem chOpcja2, mNarzJez2;
 	JTextArea notatnik;
+	String wybranyTekst;
 	
-	public JOptionPaneTest()
+	public Notatnik2()
 	{
 		setTitle("Demonstracja JMenuBar");
 		setSize(600,600);
@@ -109,7 +112,20 @@ public class JOptionPaneTest extends JFrame implements ActionListener {
 		add(bSzukaj);
 		bSzukaj.addActionListener(this);
 		
+		// Menu kontekstowe
+		popup = new JPopupMenu();
+		mpKopiuj = new JMenuItem("Kopiuj");
+		mpKopiuj.addActionListener(this);
+		mpWklej = new JMenuItem("Wklej");
+		mpWklej.addActionListener(this);
+		mpDo³¹cz = new JMenuItem("Do³¹cz");
+		mpDo³¹cz.addActionListener(this);
 		
+		popup.add(mpKopiuj);
+		popup.add(mpWklej);
+		popup.add(mpDo³¹cz);
+		
+		notatnik.setComponentPopupMenu(popup);
 	}
 	
 	
@@ -207,12 +223,24 @@ public class JOptionPaneTest extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, szukane + " wyst¹pi³o " + i + " razy: " + wystapienia);
 			
 		}
+		else if (source == mpKopiuj)
+		{
+			wybranyTekst = notatnik.getSelectedText();
+		}
+		else if (source == mpWklej)
+		{
+			notatnik.insert(wybranyTekst, notatnik.getCaretPosition());
+		} 
+		else if (source == mpDo³¹cz)
+		{
+			notatnik.append("\n" + wybranyTekst);
+		}
 		
 	}
 	
 	public static void main(String[] args)
 	{
-		JOptionPaneTest appMenu = new JOptionPaneTest();
+		Notatnik2 appMenu = new Notatnik2();
 		appMenu.setVisible(true);
 	}
 
