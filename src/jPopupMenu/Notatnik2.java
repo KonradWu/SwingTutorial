@@ -1,5 +1,6 @@
 package jPopupMenu;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,6 +11,8 @@ import java.util.Scanner;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,14 +29,15 @@ import javax.swing.KeyStroke;
 public class Notatnik2 extends JFrame implements ActionListener {
 	
 	JLabel label1;
-	JButton bSzukaj; 
+	JButton bSzukaj, bWybierzKolor; 
 	JPopupMenu popup;
 	JMenuBar menuBar; 
 	JMenu menuPlik, menuNarzedzia, mNarzedziaJezyk, menuOpcje, menuPomoc;
-	JMenuItem mOtwórz, mZapisz, mWyjœcie, mNarz1, mNarz2, mNarzJez1, mpKopiuj, mpWklej, mpDo³¹cz, mOpcja1, mOProgramie;
+	JMenuItem mOtwórz, mZapisz, mWyjœcie, mNarz1, mNarz2, mNarzJez1, mNarzJez2, mpKopiuj, mpWklej, mpDo³¹cz, mOpcja1, mOProgramie;
 	JTextField tSzukany;
-	JCheckBoxMenuItem chOpcja2, mNarzJez2;
+	JCheckBoxMenuItem chOpcja2;
 	JTextArea notatnik;
+	JComboBox colorCombo;
 	String wybranyTekst;
 	
 	public Notatnik2()
@@ -82,6 +86,16 @@ public class Notatnik2 extends JFrame implements ActionListener {
 			menuOpcje.add(mOpcja1);
 			menuOpcje.add(chOpcja2);
 		menuNarzedzia.add(menuOpcje);
+			//drugi
+		mNarzedziaJezyk = new JMenu("Jêzyk");
+		menuBar.add(mNarzedziaJezyk);
+			mNarzJez1 = new JMenuItem("Jezyk polski");
+			mNarzJez2 = new JMenuItem("Jezyk angielski");
+
+			
+			mNarzedziaJezyk.add(mNarzJez1);
+			mNarzedziaJezyk.add(mNarzJez2);
+		
 			
 		
 		
@@ -112,6 +126,12 @@ public class Notatnik2 extends JFrame implements ActionListener {
 		add(bSzukaj);
 		bSzukaj.addActionListener(this);
 		
+		//dodanie buttonu do wyboru koloru
+		bWybierzKolor = new JButton("Wybierz kolor");
+		bWybierzKolor.setBounds(350, 500, 150, 20);
+		add(bWybierzKolor);
+		bWybierzKolor.addActionListener(this);
+		
 		// Menu kontekstowe
 		popup = new JPopupMenu();
 		mpKopiuj = new JMenuItem("Kopiuj");
@@ -126,6 +146,16 @@ public class Notatnik2 extends JFrame implements ActionListener {
 		popup.add(mpDo³¹cz);
 		
 		notatnik.setComponentPopupMenu(popup);
+		
+		//Wstawiamy combo
+		colorCombo = new JComboBox();
+		colorCombo.setBounds(450, 50, 100, 20);
+		colorCombo.addItem("czarny");
+		colorCombo.addItem("czerwony");
+		colorCombo.addItem("zielony");
+		colorCombo.addItem("niebieski");
+		add(colorCombo);
+		colorCombo.addActionListener(this);
 	}
 	
 	
@@ -223,6 +253,11 @@ public class Notatnik2 extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, szukane + " wyst¹pi³o " + i + " razy: " + wystapienia);
 			
 		}
+		else if (source == bWybierzKolor)
+		{
+			Color wybranyKolor = JColorChooser.showDialog(null, "Wybór koloru", Color.GREEN);
+			notatnik.setForeground(wybranyKolor);
+		}
 		else if (source == mpKopiuj)
 		{
 			wybranyTekst = notatnik.getSelectedText();
@@ -234,6 +269,18 @@ public class Notatnik2 extends JFrame implements ActionListener {
 		else if (source == mpDo³¹cz)
 		{
 			notatnik.append("\n" + wybranyTekst);
+		}
+		else if (source == colorCombo)
+		{
+			String color = colorCombo.getSelectedItem().toString();
+			if (color.equals("zielony"))
+				notatnik.setForeground(Color.GREEN);
+			else if (color.equals("czarny"))
+					notatnik.setForeground(Color.BLACK);
+			else if (color.equals("czerwony"))
+				notatnik.setForeground(Color.RED);
+			else if (color.equals("niebieski"))
+				notatnik.setForeground(Color.BLUE);
 		}
 		
 	}
