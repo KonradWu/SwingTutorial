@@ -58,7 +58,10 @@ public class PasswordTest extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if (panelHas³a==null) 
+		{
 			panelHas³a = new PanelHas³a(this);
+		}
+		
 		panelHas³a.setVisible(true);
 		panelHas³a.setFocus();
 		
